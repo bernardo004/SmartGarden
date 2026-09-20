@@ -1,4 +1,4 @@
-# Swiftly
+# SmartGarden
 
 > A website developed during the 'Web and Mobile Programming' Course
 
