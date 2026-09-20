@@ -1,0 +1,39 @@
+<div class="card panel mb-25">
+    <h2><span class="step-number">1</span> Indirizzo di Spedizione</h2>
+    <div class="form-grid">
+        <div class="input-group full-width">
+            <label>Nome Completo</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('nome')" placeholder="Mario Rossi" [(ngModel)]="nome">
+        </div>
+        <div class="input-group full-width">
+            <label>Indirizzo</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('indirizzo')" placeholder="Via Roma 123" [(ngModel)]="indirizzo">
+        </div>
+        <div class="input-group">
+            <label>Città</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('citta')" placeholder="Palermo" [(ngModel)]="citta">
+        </div>
+        <div class="input-group">
+            <label>CAP</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('cap')" placeholder="90100" maxlength="5" [(ngModel)]="cap" (ngModelChange)="formatCAP()">
+        </div>
+    </div>
+</div>
+
+<div class="card panel">
+    <h2><span class="step-number">2</span> Metodo di Pagamento</h2>
+    <div class="form-grid">
+        <div class="input-group full-width">
+            <label>Numero Carta</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('carta')" placeholder="0000 0000 0000 0000" maxlength="19" [(ngModel)]="carta" (ngModelChange)="formatCard()">
+        </div>
+        <div class="input-group">
+            <label>Scadenza</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('scadenza')" placeholder="MM/AA" maxlength="5" [(ngModel)]="scadenza" (ngModelChange)="formatExpiry()">
+        </div>
+        <div class="input-group">
+            <label>CVV</label>
+            <input type="text" class="input" [class.input-error]="isInvalid('cvv')" placeholder="123" maxlength="4" [(ngModel)]="cvv" (ngModelChange)="formatCVV()">
+        </div>
+    </div>
+</div>

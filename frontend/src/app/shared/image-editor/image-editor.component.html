@@ -1,0 +1,23 @@
+<div class="image-editor-container" 
+     [ngClass]="format === 'circle' ? 'format-circle' : 'format-landscape'"
+     (mousedown)="startDrag($event)"
+     (touchstart)="startDrag($event)">
+    
+    <img [src]="imageUrl" 
+         class="image-editor-preview" 
+         alt="Anteprima" 
+         [class.grabbing]="isDragging"
+         [style.object-position]="format === 'landscape' ? 'center ' + objPosY + '%' : 'center'"
+         [style.transform]="'scale(' + (1 + zoomLevel/100) + ')'">
+    
+    <div class="editor-grid-overlay"></div>
+</div>
+
+@if (showControls) {
+    <div class="editor-controls">
+        <div class="input-group">
+            <label>Zoom</label>
+            <input type="range" class="input-range" min="0" max="100" [(ngModel)]="zoomLevel" (ngModelChange)="onZoomChange()">
+        </div>
+    </div>
+}

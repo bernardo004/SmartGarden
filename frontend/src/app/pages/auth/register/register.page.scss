@@ -1,0 +1,13 @@
+@use '../auth-shared';
+
+.password-strength {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 5px;
+    display: block;
+}
+
+.strength-weak { color: #d32f2f; }
+.strength-medium { color: #e6b800; }
+.strength-secure { color: #00cc44; }
+.strength-very-secure { color: #006E20; }

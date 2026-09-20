@@ -1,0 +1,35 @@
+<div class="notification-card" [ngClass]="{'notification-unread': !data.isRead}">
+    
+    <div class="notification-icon" [style.color]="data.iconColor">
+        {{ data.icon }}
+    </div>
+    
+    <div class="notification-content">
+        <div class="notification-header">
+            <h3>{{ data.title }}</h3>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="notification-time">{{ data.timeAgo }}</span>
+                <button class="btn-delete-notif" (click)="deleteNotification()" title="Elimina notifica">🗑️</button>
+            </div>
+        </div>
+        <p class="notification-body" [innerHTML]="data.message"></p>
+        
+        @if (data.hasPrimaryAction && !data.isRead) {
+            <div class="notification-actions">
+                <button class="btn btn-primary btn-small" 
+                        (click)="data.type === 'group_invite' ? handleAction('accept') : markAsRead()">
+                    {{ data.primaryText }}
+                </button>
+                
+                @if (data.hasSecondaryAction) {
+                    <button class="btn btn-light btn-small" (click)="handleAction('decline')">
+                        {{ data.secondaryText }}
+                    </button>
+                } @else {
+                    <button class="btn btn-outline btn-small" (click)="markAsRead()">Segna come letta</button>
+                }
+            </div>
+        }
+    </div>
+
+</div>

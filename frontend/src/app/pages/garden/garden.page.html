@@ -1,0 +1,219 @@
+<ion-content [fullscreen]="true">
+  <app-page-banner
+      [bgImageUrl]="garden.imageUrl"
+      [bgPosY]="garden.bgPosY"
+      [bgZoom]="garden.bgZoom"
+      backLinkUrl="/dashboard"
+      backLinkText="Torna alla Dashboard"
+      [title]="garden.nome"
+      [subtitle]="garden.descrizione"
+      [showEditBtn]="canEditCover"
+      [showEditTitleBtn]="canEditCover"
+      [showEditDescBtn]="canEditCover"
+      (onEdit)="openEditCoverModal()"
+      (onEditTitle)="openEditTitleModal()"
+      (onEditDesc)="openEditDescModal()">
+  </app-page-banner>
+
+    <main class="garden-section container">
+        <div class="garden-grid">
+            <app-plant-list
+                [plants]="plants"
+                [isLoading]="isLoadingPlants"
+                [currentUserRole]="currentUserRole"
+                (onAddPlant)="openAddPlantModal()"
+                class="animate-on-scroll slide-right">
+            </app-plant-list>
+
+            <app-member-list
+                [admins]="admins"
+                [participants]="participants"
+                [currentUserRole]="currentUserRole"
+                [currentUserEmail]="currentUserEmail"
+                [isLoading]="isLoading"
+                (onInvite)="openInviteModal()"
+                (onRoleChange)="handleRoleChange($event)"
+                (onKick)="handleKickMember($event)"
+                (onTransfer)="openTransferModal($event)"
+                (onLeave)="openLeaveModal()"
+                (onDeleteGroup)="openDeleteGroupModal()"
+                (onMemberClick)="openProfileModal($event)">
+            </app-member-list>
+        </div>
+    </main>
+</ion-content>
+
+<app-modal [isVisible]="isEditCoverModalOpen" (closeEvent)="closeEditCoverModal()">
+    <div class="modal-text-header">
+        <h3>Modifica Sfondo</h3>
+        <p>Trascina l'immagine in su o in giù per allinearla perfettamente.</p>
+    </div>
+
+    <app-image-editor
+        [imageUrl]="tempImageUrl"
+        format="landscape"
+        [showControls]="true"
+        [(objPosY)]="tempBgPosY"
+        [(zoomLevel)]="tempBgZoom">
+    </app-image-editor>
+
+    <input type="file" id="coverFileInput" style="display: none;" (change)="onFileSelected($event)" accept="image/*">
+
+    <div class="modal-upload-zone">
+        <button class="btn btn-secondary btn-full" (click)="triggerFileInput()">Carica nuova foto...</button>
+    </div>
+
+    <div class="modal-actions-vertical">
+        <button class="btn btn-primary btn-full" (click)="applyCover()">Applica Sfondo</button>
+        <button class="btn btn-text btn-full" (click)="closeEditCoverModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isInviteModalOpen" (closeEvent)="closeInviteModal()">
+    <div class="modal-text-header">
+        <h3>Invita un nuovo membro</h3>
+        <p>Inserisci l'indirizzo email della persona che vuoi invitare a gestire <strong>{{ garden.nome }}</strong>.</p>
+    </div>
+
+    <div class="input-group mb-25">
+        <label>Email dell'utente</label>
+        <input type="email" class="input" [(ngModel)]="inviteEmail" placeholder="es. amico@email.com">
+    </div>
+
+    <div class="modal-actions-vertical">
+        <button class="btn btn-primary btn-full" (click)="sendInvite()">Invia Invito</button>
+        <button class="btn btn-text btn-full" (click)="closeInviteModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isAddPlantModalOpen" (closeEvent)="closeAddPlantModal()">
+    <div class="modal-text-header">
+        <h3>Registra una nuova pianta</h3>
+        <p>Aggiungi una nuova coltura al giardino <strong>{{ garden.nome }}</strong>.</p>
+    </div>
+
+    <div class="input-group">
+        <label>Nome Pianta</label>
+        <input type="text" class="input" [(ngModel)]="newPlantData.name" placeholder="es. Pomodori Pachino">
+    </div>
+
+    <div class="input-group mb-25">
+        <label>Descrizione</label>
+        <textarea class="input" rows="3" [(ngModel)]="newPlantData.description" placeholder="Breve descrizione..."></textarea>
+    </div>
+
+    <div class="modal-actions-vertical">
+        <button class="btn btn-primary btn-full" (click)="addNewPlant()" [disabled]="!newPlantData.name">Aggiungi Pianta</button>
+        <button class="btn btn-text btn-full" (click)="closeAddPlantModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isEditTitleModalOpen" (closeEvent)="closeEditTitleModal()">
+    <div class="modal-text-header">
+        <h3>Rinomina Giardino</h3>
+        <p>Scegli un nuovo nome per questo spazio.</p>
+    </div>
+
+    <div class="input-group mb-25 text-left">
+        <label>Nome del Giardino</label>
+        <input type="text" class="input" [(ngModel)]="tempGardenName" placeholder="es. Orto Estivo">
+    </div>
+
+    <div class="modal-actions-vertical">
+        <button class="btn btn-primary btn-full" (click)="applyTitle()" [disabled]="!tempGardenName.trim()">Salva Modifiche</button>
+        <button class="btn btn-text btn-full" (click)="closeEditTitleModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isProfileModalOpen" (closeEvent)="closeProfileModal()">
+    @if (selectedMember) {
+        <div class="user-profile-modal">
+            <div class="avatar-large-wrapper mx-auto">
+                @if (selectedMember.imageUrl) {
+                    <img [src]="selectedMember.imageUrl" class="avatar-large object-cover" alt="Avatar di {{ selectedMember.name }}">
+                } @else {
+                    <div class="avatar-large" [ngClass]="selectedMember.avatarColor">
+                        {{ selectedMember.initials }}
+                    </div>
+                }
+            </div>
+
+            <h3 class="modal-name">{{ selectedMember.name }}</h3>
+            <p class="modal-role">{{ selectedMember.role }}</p>
+
+            <div class="modal-bio mt-20">
+                <h4>Biografia</h4>
+                @if (selectedMember.biography) {
+                    <p>{{ selectedMember.biography }}</p>
+                } @else {
+                    <p class="empty-bio">Questo utente non ha ancora scritto una biografia.</p>
+                }
+            </div>
+
+            <div class="modal-actions-vertical mt-20">
+                <button class="btn btn-primary btn-full" (click)="closeProfileModal()">Chiudi Profilo</button>
+            </div>
+        </div>
+    }
+</app-modal>
+
+<app-modal [isVisible]="isLeaveModalOpen" (closeEvent)="closeLeaveModal()">
+    <div class="modal-text-header">
+        <h3 style="color:#d32f2f;">Vuoi davvero uscire?</h3>
+        <p>Se abbandoni <strong>{{ garden.nome }}</strong>, perderai l'accesso a tutte le piante e misurazioni. Solo un amministratore potrà invitarti di nuovo.</p>
+    </div>
+    <div class="modal-actions-vertical mt-25">
+        <button class="btn btn-danger btn-full" (click)="confirmLeave()">Sì, abbandona il gruppo</button>
+        <button class="btn btn-text btn-full" (click)="closeLeaveModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isTransferModalOpen" (closeEvent)="closeTransferModal()">
+    @if(selectedNewCreator) {
+        <div class="modal-text-header">
+            <h3>Cambia Creatore</h3>
+            <p>Stai per cedere la proprietà totale del giardino <strong>{{ garden.nome }}</strong> a <strong>{{ selectedNewCreator.name }}</strong>.</p>
+            <p class="mt-15" style="color: #e67e22;">Attenzione: diventerai un semplice Amministratore e non potrai più eliminare il gruppo.</p>
+        </div>
+        <div class="modal-actions-vertical mt-25">
+            <button class="btn btn-primary btn-full" (click)="confirmTransfer()">Conferma Trasferimento</button>
+            <button class="btn btn-text btn-full" (click)="closeTransferModal()">Annulla</button>
+        </div>
+    }
+</app-modal>
+
+<app-modal [isVisible]="isDeleteGroupModalOpen" (closeEvent)="closeDeleteGroupModal()">
+    <div class="modal-text-header">
+        <h3 style="color:#d32f2f;">Elimina Giardino</h3>
+        <p>Questa azione è <strong>irreversibile</strong>. Eliminerai l'accesso a tutti i membri e le piante e misurazioni verranno cancellate per sempre.</p>
+    </div>
+
+    <div class="input-group mb-25 mt-20 text-left">
+        <label>Per confermare, scrivi: <strong style="user-select: none;">{{ garden.nome }}</strong></label>
+        <input type="text" class="input" [(ngModel)]="deleteConfirmName" placeholder="Nome del giardino...">
+    </div>
+
+    <div class="modal-actions-vertical">
+        <button class="btn btn-danger btn-full" (click)="confirmDeleteGroup()" [disabled]="deleteConfirmName !== garden.nome">
+            Elimina Definitivamente
+        </button>
+        <button class="btn btn-text btn-full" (click)="closeDeleteGroupModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isEditDescModalOpen" (closeEvent)="closeEditDescModal()">
+    <div class="modal-text-header">
+        <h3>Modifica Descrizione</h3>
+        <p>Inserisci una breve descrizione per presentare questo spazio.</p>
+    </div>
+
+    <div class="input-group mb-25 text-left">
+        <label>Descrizione del Giardino</label>
+        <textarea class="input" rows="3" [(ngModel)]="tempGardenDescription" placeholder="es. Un orto sul balcone dedicato alle piante aromatiche..."></textarea>
+    </div>
+
+    <div class="modal-actions-vertical">
+        <button class="btn btn-primary btn-full" (click)="applyDescription()">Salva Modifiche</button>
+        <button class="btn btn-text btn-full" (click)="closeEditDescModal()">Annulla</button>
+    </div>
+</app-modal>

@@ -1,0 +1,20 @@
+<header class="focus-header animate-on-scroll fade-up">
+    <div class="header-left">
+        <a [routerLink]="backLinkUrl" class="back-link">
+            <span>&larr;</span> {{ backLinkText }}
+        </a>
+    </div>
+    
+    <div class="header-center">
+        <div class="focus-branding">
+            <svg class="animated-logo" viewBox="0 0 24 24" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12 22 L12 12 M12 15 Q18 15 18 9 Q12 9 12 15 M12 18 Q6 18 6 12 Q12 12 12 18" />
+			</svg>
+            <span class="logo-text">SmartGarden</span>
+            <span class="separator">/</span>
+            <span class="page-title">{{ title }}</span> 
+        </div>
+    </div>
+    
+    <div class="header-right"></div>
+</header>

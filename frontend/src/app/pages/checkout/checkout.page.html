@@ -1,0 +1,17 @@
+<ion-content [fullscreen]="true">
+    <app-focus-header title="CHECKOUT" backLinkUrl="/shop" backLinkText="Torna allo Shop"></app-focus-header>
+
+    <main class="checkout-section">
+        <div class="checkout-container container">
+            
+            <div class="checkout-form-column animate-on-scroll slide-right">
+                <app-checkout-shipping #shipping></app-checkout-shipping>
+            </div>
+            
+            <aside class="summary-column animate-on-scroll slide-left">
+                <app-checkout-summary [shippingComponent]="shipping"></app-checkout-summary>
+            </aside>
+            
+        </div>
+    </main>
+</ion-content>

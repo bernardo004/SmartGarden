@@ -1,0 +1,48 @@
+<p class="auth-subtitle">Crea il tuo account e inizia a coltivare.</p>
+
+@if (serverError) {
+    <div class="status-note danger mb-25">
+        {{ serverError }}
+    </div>
+}
+@if (successMessage) {
+    <div class="status-note success mb-25">
+        {{ successMessage }}
+    </div>
+}
+
+<form (submit)="onRegister($event)">
+    <div class="input-group">
+        <label for="reg-name">Nome Utente</label>
+        <input type="text" id="reg-name" class="input" [class.input-error]="isInvalid('name')" placeholder="Es. Marco Rossi" [(ngModel)]="name" name="name">
+    </div>
+
+    <div class="input-group">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" class="input" [class.input-error]="isInvalid('email')" placeholder="nome@esempio.com" [(ngModel)]="email" name="email">
+    </div>
+
+    <div class="input-group">
+        <label for="reg-password">Password</label>
+        <input type="password" id="reg-password" class="input" [class.input-error]="isInvalid('password')" placeholder="Crea una password" [(ngModel)]="password" name="password" (ngModelChange)="checkPasswordStrength()">
+        
+        @if (passwordStrengthText) {
+            <span class="password-strength" [ngClass]="passwordStrengthClass">
+                {{ passwordStrengthText }}
+            </span>
+        }
+    </div>
+
+    <div class="input-group">
+        <label for="reg-confirm">Conferma Password</label>
+        <input type="password" id="reg-confirm" class="input" [class.input-error]="isInvalid('confirmPassword')" placeholder="Ripeti la password" [(ngModel)]="confirmPassword" name="confirmPassword">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full mt-15" [disabled]="isSubmitting || successMessage">
+        {{ isSubmitting ? 'Creazione in corso...' : 'Registrati' }}
+    </button>
+</form>
+
+<div class="auth-footer">
+    <p>Hai già un account? <a routerLink="/auth/login">Accedi qui</a></p>
+</div>

@@ -1,0 +1,40 @@
+<h2 class="section-title">Sicurezza Account</h2>
+<hr class="divider">
+
+<form class="settings-form" (submit)="updatePassword(); $event.preventDefault()">
+    <div class="input-group">
+        <label>Indirizzo Email attuale</label>
+        <input type="email" class="input input-disabled" [value]="userEmail" disabled>
+    </div>
+    <div class="input-group">
+        <label>Nuova Password</label>
+        <input type="password" class="input" [(ngModel)]="newPassword" name="newPassword" placeholder="Inserisci la nuova password">
+    </div>
+    <div class="input-group">
+        <label>Conferma Nuova Password</label>
+        <input type="password" class="input" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Ripeti la password">
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="!newPassword || newPassword !== confirmPassword">Aggiorna Credenziali</button>
+    </div>
+</form>
+
+<div class="danger-zone mt-15">
+    <h3 class="text-danger m-0">Zona Pericolo</h3>
+    <p class="desc-text mt-15">L'eliminazione è definitiva. Perderai tutti i dati dei sensori e i tuoi giardini.</p>
+    <button type="button" class="btn btn-danger mt-15" (click)="openDeleteModal()">
+        Elimina Account per Sempre
+    </button>
+</div>
+
+<app-modal [isVisible]="isDeleteModalOpen" (closeEvent)="isDeleteModalOpen = false">
+    <h3 class="modal-title-danger">Elimina Account</h3>
+    <p class="modal-subtitle-custom">
+        Questa operazione è irreversibile. Sei sicuro di voler chiudere il tuo account SmartGarden per sempre?
+    </p>
+    
+    <div class="modal-btn-group">
+        <button class="btn btn-danger btn-full" (click)="confirmDelete()">Sì, Elimina Account</button>
+        <button class="btn btn-text btn-full" (click)="isDeleteModalOpen = false">Annulla e Torna Indietro</button>
+    </div>
+</app-modal>

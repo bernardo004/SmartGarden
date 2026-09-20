@@ -1,0 +1,17 @@
+<div class="action-menu-container">
+    <button class="btn-icon" (click)="toggleDropdown()">⋮</button>
+    
+    @if (isOpen) {
+        <div class="action-dropdown show">
+            @if (currentUserRole === 'Creatore') {
+                @if (targetRole === 'Membro') {
+                    <button class="text-success" (click)="onPromote.emit(); isOpen = false">Rendi Admin</button>
+                }
+                @if (targetRole === 'Admin') {
+                    <button class="text-warning" (click)="onDemote.emit(); isOpen = false">Revoca Admin</button>
+                }
+            }
+            <button class="text-danger" (click)="onKick.emit(); isOpen = false">Rimuovi dal Gruppo</button>
+        </div>
+    }
+</div>

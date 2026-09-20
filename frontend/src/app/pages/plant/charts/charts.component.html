@@ -1,0 +1,110 @@
+<section class="panel card animate-on-scroll slide-left charts-export-zone">
+
+    <div class="print-header hidden">
+        <h1>Report: {{ plant.name }}</h1>
+        <p>Generato da SmartGarden</p>
+    </div>
+
+    <div class="panel-header">
+        <div class="header-titles">
+            <h2 class="panel-title">Andamento Sensori</h2>
+            <p class="sync-time">{{ lastSyncTime }}</p>
+        </div>
+
+        <div class="header-actions">
+			@if (currentUserRole === 'Creatore' || currentUserRole === 'Admin') {
+				<button class="btn btn-primary" (click)="openSensorModal()">Gestisci Sensore</button>
+			}
+			<button class="btn btn-outline" (click)="exportToPDF()">Esporta Dati</button>
+		</div>
+    </div>
+
+    <div class="filters-bar">
+        <div class="date-input-group">
+            <label>Periodo:</label>
+            <select class="input date-picker select-picker" [(ngModel)]="datePreset" (change)="applyPreset(datePreset)">
+                <option value="today">Oggi</option>
+                <option value="7days">Ultimi 7 Giorni</option>
+                <option value="30days">Ultimo Mese (30 gg)</option>
+                <option value="custom">Personalizzato...</option>
+            </select>
+        </div>
+
+        @if (datePreset === 'custom') {
+            <div class="date-input-group custom-dates-animate">
+                <label>Dal:</label>
+                <input type="date" class="input date-picker" [(ngModel)]="startDate" [max]="maxAllowedDate" (change)="applyDateFilter()">
+            </div>
+            <div class="date-input-group custom-dates-animate">
+                <label>Al:</label>
+                <input type="date" class="input date-picker" [(ngModel)]="endDate" [max]="maxAllowedDate" (change)="applyDateFilter()">
+            </div>
+        }
+    </div>
+
+    <div class="charts-grid">
+        @if (isDataLoading) {
+            @for (dummy of [1, 2, 3, 4]; track dummy) {
+                <div class="chart-box">
+                    <div class="shimmer mb-15" style="height: 18px; width: 60%; border-radius: 4px;"></div>
+                    <div class="shimmer" style="height: 200px; width: 100%; border-radius: 8px;"></div>
+                </div>
+            }
+        } @else if (!hasDataInPeriod) {
+            <div class="empty-state-charts">
+                <p>Nessuna misurazione trovata per questo periodo.</p>
+                <span class="sub-text">Prova ad ampliare le date del filtro.</span>
+            </div>
+        } @else {
+            <div class="chart-box">
+                <h4>Umidità Terreno (%)</h4>
+                <div class="canvas-wrapper"><canvas [id]="'chartUmidita-' + plantId"></canvas></div>
+            </div>
+
+            <div class="chart-box">
+                <h4>Umidità Ambiente (%)</h4>
+                <div class="canvas-wrapper"><canvas [id]="'chartUmiditaAmbiente-' + plantId"></canvas></div>
+            </div>
+
+            <div class="chart-box">
+                <h4>Temperatura (°{{ tempUnit }})</h4>
+                <div class="canvas-wrapper"><canvas [id]="'chartTemp-' + plantId"></canvas></div>
+            </div>
+
+            <div class="chart-box">
+                <h4>Luce solare (Lux)</h4>
+                <div class="canvas-wrapper"><canvas [id]="'chartLuce-' + plantId"></canvas></div>
+            </div>
+        }
+    </div>
+</section>
+
+<app-modal [isVisible]="isSensorModalOpen" (closeEvent)="closeSensorModal()">
+    <div class="modal-text-header">
+        <h3 class="modal-title-custom">Gestione Sensore</h3>
+        <p class="modal-subtitle-custom">Gestisci il modulo hardware Arduino collegato a questa pianta.</p>
+    </div>
+
+    @if (currentSensorId) {
+        <div class="connected-sensor-box">
+            <div class="sensor-icon">🔌</div>
+            <div class="sensor-details">
+                <h4>Sensore Attivo</h4>
+                <p>{{ currentSensorId }}</p>
+            </div>
+        </div>
+        <div class="modal-btn-group mt-20">
+            <button class="btn btn-outline btn-full" style="color: #e74c3c; border-color: #e74c3c;" (click)="linkSensorToPlant('')">Scollega Sensore</button>
+            <button class="btn btn-text btn-full" (click)="closeSensorModal()">Chiudi</button>
+        </div>
+    } @else {
+        <div class="input-group modal-input-wrapper">
+            <label>ID Hardware</label>
+            <input type="text" class="input" [(ngModel)]="newSensorId" placeholder="es. SENS-ARDUINO-001">
+        </div>
+        <div class="modal-btn-group">
+            <button class="btn btn-primary btn-full" (click)="linkSensorToPlant(newSensorId)" [disabled]="!newSensorId.trim()">Collega</button>
+            <button class="btn btn-text btn-full" (click)="closeSensorModal()">Annulla</button>
+        </div>
+    }
+</app-modal>

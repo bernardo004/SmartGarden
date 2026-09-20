@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true">
+    <app-focus-header title="IMPOSTAZIONI" backLinkUrl="/dashboard" backLinkText="Torna alla Dashboard"></app-focus-header>
+
+    @if (showAnimations) {
+        <main class="settings-section">
+            <div class="settings-container container container-md">
+                <div class="settings-layout">
+                    
+                    <aside class="settings-sidebar animate-on-scroll slide-right">
+                        <nav class="settings-nav">
+                            <a routerLink="/settings/profile" routerLinkActive="active">Profilo</a>
+                            <a routerLink="/settings/security" routerLinkActive="active">Sicurezza</a>
+                            <a routerLink="/settings/preferences" routerLinkActive="active">Preferenze</a>
+                        </nav>
+                    </aside>
+
+                    <div class="settings-content card animate-on-scroll fade-up">
+                        <router-outlet></router-outlet>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    }
+</ion-content>

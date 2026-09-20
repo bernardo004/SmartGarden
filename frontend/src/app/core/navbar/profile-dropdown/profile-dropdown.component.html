@@ -1,0 +1,47 @@
+<div class="profile-dropdown">
+    <button class="profile-btn" [class.active]="isOpen" (click)="toggleMenu()" aria-expanded="false">
+        
+        @if (userImageUrl) {
+            <img [src]="userImageUrl" class="avatar-circle" alt="Profilo">
+        } @else {
+            <div class="avatar-circle">{{ userInitials }}</div>
+        }
+        
+        <span class="profile-name desktop-only">{{ userName }}</span>
+        <span class="dropdown-arrow desktop-only">▼</span>
+    </button>
+
+    <div class="dropdown-menu" [class.show]="isOpen">
+        
+        <div class="dropdown-header">
+            @if (userImageUrl) {
+                <img [src]="userImageUrl" class="header-avatar-large mobile-only" alt="Profilo">
+            } @else {
+                <div class="header-avatar-large mobile-only">{{ userInitials }}</div>
+            }
+            
+            <div class="header-info">
+                <strong>{{ userName }}</strong>
+                <span>{{ userEmail }}</span>
+            </div>
+        </div>
+        
+        <hr class="dropdown-divider">
+        
+        <a routerLink="/settings/profile" class="dropdown-item" (click)="toggleMenu()">
+            Impostazioni
+        </a>
+        <a routerLink="/notifications" class="dropdown-item" (click)="toggleMenu()">
+			Notifiche
+			@if (unreadCount > 0) {
+				<span class="badge-red">{{ unreadCount }}</span>
+			}
+		</a>
+        
+        <hr class="dropdown-divider">
+        
+        <a href="#" (click)="logout($event)" class="dropdown-item text-danger">
+            Esci
+        </a>
+    </div>
+</div>

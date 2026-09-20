@@ -1,0 +1,34 @@
+.checkout-section { 
+    padding-top: 40px; 
+    padding-bottom: 80px; 
+}
+
+.checkout-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.checkout-form-column {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.summary-column {
+    flex: 1;
+    position: sticky;
+    top: 20px;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .summary-column {
+        position: static; 
+    }
+}

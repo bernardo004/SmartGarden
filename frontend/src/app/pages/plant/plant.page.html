@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true">
+    <app-page-banner 
+        [bgImageUrl]="gardenContext.imageUrl"
+        [bgPosY]="gardenContext.bgPosY"
+        [bgZoom]="gardenContext.bgZoom"
+        [backLinkUrl]="backToGardenUrl" 
+        backLinkText="Torna al Giardino"
+        [title]="plant.name"
+        
+        [subtitle]="plant.plantedAt ? 'Piantata il ' + (plant.plantedAt | date:'dd/MM/yyyy') : 'Data di semina non inserita'"
+        
+        [statusText]="plant.statusText"
+        [statusIcon]="plant.statusIcon"
+        [statusClass]="plant.statusClass"
+        
+        [showEditTitleBtn]="currentUserRole === 'Creatore' || currentUserRole === 'Admin'"
+        [showEditDescBtn]="currentUserRole === 'Creatore' || currentUserRole === 'Admin'"
+        
+        (onEditTitle)="openEditTitleModal()"
+        (onEditDesc)="openEditDateModal()">
+    </app-page-banner>
+
+    <main class="pianta-section container">
+        <div class="pianta-grid">
+            <app-profile [plant]="plant" [currentUserRole]="currentUserRole" [isLoading]="isLoading"></app-profile>
+            <app-charts [plantId]="plant.id" [plant]="plant" [currentUserRole]="currentUserRole"></app-charts>
+        </div>
+    </main>
+</ion-content>
+
+<app-modal [isVisible]="isEditTitleModalOpen" (closeEvent)="closeEditTitleModal()">
+    <div class="modal-text-header">
+        <h3 class="modal-title-custom">Rinomina Pianta</h3>
+        <p class="modal-subtitle-custom">Dai un nuovo nome a questa coltura.</p>
+    </div>
+    
+    <div class="input-group modal-input-wrapper">
+        <label>Nome della Pianta</label>
+        <input type="text" class="input" [(ngModel)]="tempPlantName" placeholder="es. Pomodoro San Marzano">
+    </div>
+
+    <div class="modal-btn-group">
+        <button class="btn btn-primary btn-full" (click)="applyTitle()" [disabled]="!tempPlantName.trim()">Salva Modifiche</button>
+        <button class="btn btn-text btn-full" (click)="closeEditTitleModal()">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isEditDateModalOpen" (closeEvent)="closeEditDateModal()">
+    <div class="modal-text-header">
+        <h3 class="modal-title-custom">Data di Semina</h3>
+        <p class="modal-subtitle-custom">Inserisci o modifica la data in cui hai piantato questa coltura.</p>
+    </div>
+    
+    <div class="input-group modal-input-wrapper">
+        <label>Seleziona una data</label>
+        <input type="date" class="input" [(ngModel)]="tempPlantedDate">
+    </div>
+
+    <div class="modal-btn-group">
+        <button class="btn btn-primary btn-full" (click)="applyPlantedDate()" [disabled]="!tempPlantedDate">Salva Data</button>
+        <button class="btn btn-text btn-full" (click)="closeEditDateModal()">Annulla</button>
+    </div>
+</app-modal>

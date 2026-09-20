@@ -1,0 +1,9 @@
+@if (isVisible) {
+    <div class="modal-overlay" (click)="close()">
+        <div class="modal-content" (click)="stopPropagation($event)">
+            <div class="modal-body">
+                <ng-content></ng-content> 
+            </div>
+        </div>
+    </div>
+}

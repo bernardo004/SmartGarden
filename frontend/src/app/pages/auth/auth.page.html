@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true">
+  @if (showAnimations) {
+    <div class="auth-wrapper">
+        <div class="card auth-layout-card animate-on-scroll zoom-in">
+            
+            <a routerLink="/home" class="back-link">
+                <span>&larr;</span> Torna alla Home
+            </a>
+
+            <div class="auth-branding">
+                <svg class="animated-logo" viewBox="0 0 24 24" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+					<path d="M12 22 L12 12 M12 15 Q18 15 18 9 Q12 9 12 15 M12 18 Q6 18 6 12 Q12 12 12 18" />
+				</svg>
+                <span class="logo-text">SmartGarden</span>
+            </div>
+
+            <router-outlet></router-outlet>
+
+        </div>
+    </div>
+  }
+</ion-content>

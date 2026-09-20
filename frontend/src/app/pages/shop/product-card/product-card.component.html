@@ -1,0 +1,18 @@
+<article class="card product-card card-hoverable" [class.active]="isActive" (click)="toggleCard($event)">
+    <div class="product-image">
+        <img [src]="product.image" [alt]="product.name">
+    </div>
+    <div class="product-content">
+        <h3>{{ product.name }}</h3>
+        <div class="price">€ {{ product.price | number:'1.2-2' }}</div>
+        <div class="click-hint">Clicca per i dettagli</div>
+    </div>
+    
+    <div class="product-dropdown">
+        <p>{{ product.description }}</p>
+        <div class="dropdown-actions">
+            <button class="btn btn-primary" (click)="addToCart($event)">{{ buttonText }}</button>
+            <a [href]="product.manualUrl" download class="btn btn-secondary" (click)="$event.stopPropagation()">Manuale</a>
+        </div>
+    </div>                    
+</article>

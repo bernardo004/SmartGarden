@@ -1,0 +1,62 @@
+<section class="panel card">
+    <div class="panel-header">
+        <h2 class="panel-title">Membri</h2>
+
+        @if (currentUserRole === 'Creatore' || currentUserRole === 'Admin') {
+            <button class="btn btn-secondary" title="Invita un nuovo membro" (click)="onInvite.emit()">+ Invita</button>
+        }
+    </div>
+
+    @if (isLoading) {
+        <div class="member-group">
+            <h4>Caricamento in corso...</h4>
+            @for (dummy of [1, 2, 3]; track dummy) {
+                <div class="skeleton-member-item">
+                    <div class="shimmer skeleton-avatar"></div>
+                    <div class="skeleton-info">
+                        <div class="shimmer skeleton-name"></div>
+                        <div class="shimmer skeleton-role"></div>
+                    </div>
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="member-group">
+            <h4>Amministratori</h4>
+            @for (admin of admins; track admin.id) {
+                <app-member-item
+                    [member]="admin"
+                    [currentUserRole]="currentUserRole"
+                    [currentUserEmail]="currentUserEmail"
+                    (onRoleChange)="onRoleChange.emit($event)"
+                    (onKick)="onKick.emit($event)"
+                    (onTransfer)="onTransfer.emit($event)"
+                    (onLeave)="onLeave.emit()"
+                    (onDeleteGroup)="onDeleteGroup.emit()"
+                    (onClick)="onMemberClick.emit(admin)">
+                </app-member-item>
+            }
+        </div>
+
+        <div class="member-group">
+            <h4>Partecipanti</h4>
+            @for (participant of participants; track participant.id) {
+                <app-member-item
+                    [member]="participant"
+                    [currentUserRole]="currentUserRole"
+                    [currentUserEmail]="currentUserEmail"
+                    (onRoleChange)="onRoleChange.emit($event)"
+                    (onKick)="onKick.emit($event)"
+                    (onTransfer)="onTransfer.emit($event)"
+                    (onLeave)="onLeave.emit()"
+                    (onDeleteGroup)="onDeleteGroup.emit()"
+                    (onClick)="onMemberClick.emit(participant)">
+                </app-member-item>
+            }
+        </div>
+    }
+
+    <p class="note-footer">
+        Le modifica appariranno nel <a routerLink="/notifications">Centro Notifiche</a>.
+    </p>
+</section>

@@ -1,0 +1,76 @@
+<app-navbar></app-navbar>
+
+<ion-content [fullscreen]="true">
+    @if (showAnimations) {
+        <main class="dashboard-section animate-on-scroll fade-up">
+            <div class="dashboard-container">
+
+                <div class="dashboard-header">
+                    <div class="header-text-group">
+                        <h1>Bentornato, {{ userName }}!</h1>
+                        <p>Ecco lo stato dei tuoi gruppi e dei tuoi giardini virtuali.</p>
+                    </div>
+                    <div class="header-actions">
+						<button class="btn btn-primary" (click)="openModal()">+ Nuovo Giardino</button>
+					</div>
+                </div>
+
+                <div class="gardens-grid">
+                    @if (isLoading) {
+                        @for (dummy of [1, 2, 3]; track dummy) {
+                            <div class="card skeleton-wrapper">
+                                <div class="skeleton-img shimmer"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-title shimmer"></div>
+                                    <div class="skeleton-text shimmer"></div>
+                                    <div class="skeleton-text short shimmer"></div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    @else {
+                        @for (garden of gardens; track garden.id) {
+                            <app-garden-card [data]="garden" class="animate-on-scroll zoom-in"></app-garden-card>
+                        }
+
+                        @if (gardens.length === 0) {
+                            <div class="card empty-state text-center panel">
+                                <h3>Nessun giardino trovato</h3>
+                                <p class="mb-25">Non fai ancora parte di nessun giardino. Creane uno nuovo per iniziare a coltivare!</p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </main>
+    }
+</ion-content>
+
+@if (isModalOpen) {
+    <div class="modal-overlay" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Crea un nuovo Giardino</h2>
+                <button class="close-btn" (click)="closeModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nome del Giardino <span class="text-danger">*</span></label>
+                    <input type="text" [(ngModel)]="newGardenName" placeholder="Es. Serra universitaria" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <textarea [(ngModel)]="newGardenDesc" placeholder="Breve descrizione del progetto..." rows="3" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline" (click)="closeModal()" [disabled]="isCreating">Annulla</button>
+                <button class="btn btn-primary" (click)="createGarden()" [disabled]="!newGardenName.trim() || isCreating">
+                    {{ isCreating ? 'Creazione...' : 'Crea Giardino' }}
+                </button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,167 @@
+<section class="panel card animate-on-scroll slide-right">
+    @if (isLoading) {
+        <div class="pianta-profile-container">
+            <div class="hero-img-wrapper shimmer"></div>
+        </div>
+        
+        <div class="info-block">
+            <div class="shimmer skeleton-title mb-25"></div>
+            <div class="shimmer skeleton-line mb-10"></div>
+            <div class="shimmer skeleton-line w-90 mb-10"></div>
+            <div class="shimmer skeleton-line w-70"></div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="info-block">
+            <div class="shimmer skeleton-title mb-25"></div>
+            <div class="shimmer skeleton-box mb-15"></div>
+            <div class="shimmer skeleton-box"></div>
+        </div>
+    } @else {
+        <div class="pianta-profile-container">
+            <div class="hero-img-wrapper">
+                <img [src]="plant.imageUrl" 
+                     alt="Foto pianta" 
+                     class="plant-hero-img"
+                     [style.objectPosition]="'center ' + plant.imgPosY + '%'"
+                     [style.transform]="'scale(' + (1 + (plant.imgZoom / 100)) + ')'">
+            </div>
+            @if (currentUserRole === 'Creatore' || currentUserRole === 'Admin') {
+				<button class="btn btn-glass btn-edit-hero" (click)="openEditImgModal()">
+					Modifica
+				</button>
+			}
+        </div>
+        
+        <div class="info-block">
+            <div class="block-header">
+                <h3>Descrizione</h3>
+				@if (currentUserRole === 'Creatore' || currentUserRole === 'Admin') {
+					<button class="btn btn-text" (click)="openEditDescModal()">Modifica</button>
+				}
+            </div>
+            <p class="desc-text">{{ plant.description }}</p>
+            
+            @if (plant.statusNote) {
+                <div class="status-note" [ngClass]="plant.statusNoteClass">
+                    <strong>Nota di stato:</strong> {{ plant.statusNote }}
+                </div>
+            }
+        </div>
+
+        <hr class="divider">
+
+        <div class="info-block">
+            <h3>Ultimi Eventi</h3>
+            <div class="mt-15">
+                @for (event of plant.events; track event.id) {
+                    <div class="event-item">
+                        <span class="event-icon">{{ event.icon }}</span>
+                        <div class="event-details">
+                            <span class="event-title">{{ event.title }}</span>
+                            <span class="event-meta">{{ event.meta }}</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="info-block">
+            <h3>Azioni Rapide</h3>
+            <div class="azioni-colonna">
+                <button class="btn btn-info btn-full" (click)="openWaterModal()">Registra Innaffiamento</button>
+                <button class="btn btn-primary btn-full" (click)="openStatusModal()">+ Stato</button>
+                
+                @if (currentUserRole === 'Creatore' || currentUserRole === 'Admin') {
+                    <button class="btn btn-danger btn-full" (click)="openDeleteModal()">Elimina Pianta</button>
+                }
+            </div>
+        </div>
+    }
+</section>
+
+<app-modal [isVisible]="isEditImgModalOpen" (closeEvent)="isEditImgModalOpen = false">
+    <h3 class="modal-title-custom">Modifica Foto Pianta</h3>
+    <p class="modal-subtitle-custom">Inquadra il dettaglio migliore della tua pianta.</p>
+    
+    <app-image-editor 
+        [imageUrl]="tempImageUrl" 
+        format="circle" 
+        [showControls]="true"
+        [(objPosY)]="tempObjPosY"
+        [(zoomLevel)]="tempZoom">
+    </app-image-editor>
+
+    <input type="file" id="cameraInput" style="display: none;" accept="image/*" capture="environment" (change)="onFileSelected($event)">
+    <input type="file" id="galleryInput" style="display: none;" accept="image/*" (change)="onFileSelected($event)">
+
+    <div style="margin-top: 40px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 10px;">
+        <button class="btn btn-secondary btn-full mobile-only" (click)="triggerCamera()">
+            Scatta Foto
+        </button>
+        <button class="btn btn-outline btn-full" (click)="triggerGallery()">
+            Carica dalla Galleria
+        </button>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #d5d5d5; margin-bottom: 25px; width: 100%;">
+
+    <div class="modal-btn-group">
+        <button class="btn btn-primary btn-full" (click)="applyImage()">Salva Foto</button>
+        <button class="btn btn-text btn-full" (click)="isEditImgModalOpen = false">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isEditDescModalOpen" (closeEvent)="isEditDescModalOpen = false">
+    <h3 class="modal-title-custom">Modifica Descrizione</h3>
+    <textarea class="input modal-textarea" rows="4" [(ngModel)]="tempDesc"></textarea>
+    <div class="modal-btn-group">
+        <button class="btn btn-primary btn-full" (click)="applyDesc()">Salva Modifiche</button>
+        <button class="btn btn-text btn-full" (click)="isEditDescModalOpen = false">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isWaterModalOpen" (closeEvent)="isWaterModalOpen = false">
+    <h3 class="modal-title-custom">Registra Innaffiamento</h3>
+    <p class="modal-subtitle-custom">Quanta acqua hai dato a {{ plant.name }}?</p>
+    
+    <div class="input-group modal-input-wrapper">
+        <label>Quantità (in ml)</label>
+        <input type="number" class="input" [(ngModel)]="waterAmount" min="50" step="50">
+    </div>
+    
+    <div class="modal-btn-group">
+        <button class="btn btn-info btn-full" (click)="applyWater()">Conferma Innaffiamento</button>
+        <button class="btn btn-text btn-full" (click)="isWaterModalOpen = false">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isStatusModalOpen" (closeEvent)="isStatusModalOpen = false">
+    <h3 class="modal-title-custom">Nuovo Stato</h3>
+    <p class="modal-subtitle-custom">Segnala manualmente una condizione della pianta visiva o anomala.</p>
+    
+    <select class="input modal-select" [(ngModel)]="tempStatus">
+        <option>In Salute</option>
+        <option>Necessita Acqua</option>
+        <option>Parassiti</option>
+        <option>Carenza Nutrienti</option>
+    </select>
+    <textarea class="input modal-textarea" rows="2" placeholder="Note aggiuntive..." [(ngModel)]="tempStatusNote"></textarea>
+    
+    <div class="modal-btn-group">
+        <button class="btn btn-primary btn-full" (click)="applyStatus()">Aggiorna Stato</button>
+        <button class="btn btn-text btn-full" (click)="isStatusModalOpen = false">Annulla</button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isDeleteModalOpen" (closeEvent)="isDeleteModalOpen = false">
+    <h3 class="modal-title-danger">Elimina Pianta</h3>
+    <p class="modal-subtitle-custom">Tutti i dati andranno persi per sempre.</p>
+    <div class="modal-btn-group">
+        <button class="btn btn-danger btn-full" (click)="confirmDelete()">Conferma Eliminazione</button>
+        <button class="btn btn-text btn-full" (click)="isDeleteModalOpen = false">Annulla</button>
+    </div>
+</app-modal>

@@ -1,0 +1,136 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.focus-header { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    padding: 30px 40px 15px; 
+    background-color: transparent; 
+}
+
+.focus-header.header-transparent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    border-bottom: none;
+    z-index: 10;
+}
+
+.focus-header .header-left, 
+.focus-header .header-center, 
+.focus-header .header-right {
+    flex: 1;
+    display: flex;
+}
+
+.focus-header .header-left { 
+    justify-content: flex-start; 
+}
+
+.focus-header .header-center { 
+    justify-content: center; 
+}
+
+.focus-header .header-right { 
+    justify-content: flex-end; 
+}
+
+.focus-branding {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap; 
+	
+	.animated-logo {
+        fill: transparent;                     
+        stroke: var(--dark-green, #2ecc71);    
+        stroke-width: 2.5;                     
+        stroke-linecap: round;                 
+        stroke-linejoin: round;
+        
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        
+        animation: drawPlant 2s ease-in-out forwards;
+		
+		position: relative;
+        top: -6px;
+    }
+}
+
+.focus-branding .logo-icon { 
+    font-size: 1.6rem; 
+}
+
+.focus-branding .logo-text { 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    color: var(--dark-green); 
+}
+
+.focus-branding .separator { 
+    color: #ccc; 
+    font-size: 1.5rem; 
+    font-weight: 300; 
+    padding: 0 5px; 
+}
+
+.focus-branding .page-title { 
+    font-size: 1.2rem; 
+    font-weight: 600; 
+    color: var(--text-secondary); 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+@media (max-width: 768px) {
+    .focus-header { 
+        padding: 30px 20px 15px; 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 15px; 
+    }
+    
+    .focus-header .header-left, 
+    .focus-header .header-center { 
+        justify-content: flex-start; 
+        width: 100%; 
+        flex: none; 
+    }
+    
+    .focus-header .header-right { 
+        display: none; 
+    }
+
+    .focus-branding {
+        white-space: normal; 
+        flex-wrap: wrap;     
+        gap: 5px;
+    }
+    
+    .focus-branding .separator { 
+        display: none; 
+    }
+    
+    .focus-branding .page-title {
+        width: 100%; 
+        font-size: 1.1rem;
+        margin-top: 2px;
+    }
+}
+
+@keyframes drawPlant {
+    0% {
+        stroke-dashoffset: 100; 
+    }
+    100% {
+        stroke-dashoffset: 0;   
+    }
+}

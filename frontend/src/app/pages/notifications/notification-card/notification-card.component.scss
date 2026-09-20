@@ -1,0 +1,138 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.notification-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--light-gray);
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+}
+
+.notification-unread {
+    border-left-color: var(--primary-green);
+    background-color: #f4fbf5;
+}
+
+.notification-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    background-color: var(--white);
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--dark-green);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.notification-time {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.notification-body {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+    
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-light {
+    background-color: #f5f6f8;
+    color: var(--text-secondary);
+    border: 1px solid #e4e7eb;
+    &:hover { background-color: #e4e7eb; }
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .notification-card {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .notification-icon {
+        font-size: 1.4rem;
+        padding: 8px;
+    }
+
+    .notification-header {
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .notification-time {
+        margin-left: 0;
+    }
+
+    .notification-actions {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        
+        .btn { width: 100%; }
+    }
+}
+
+.btn-delete-notif {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    opacity: 0.4;
+    transition: opacity 0.2s, transform 0.2s;
+    padding: 0;
+
+    &:hover {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}

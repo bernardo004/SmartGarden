@@ -1,0 +1,61 @@
+ion-item.plant-item {
+    display: block; 
+    margin-bottom: 16px; 
+    
+    --background: #ffffff;
+    --border-radius: 16px; 
+    border-radius: 16px;   
+    
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+    
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    
+    transition: all 0.3s ease;
+    
+    &:hover {
+        border-color: var(--light-green, #4caf50);
+        --background: rgba(232, 245, 233, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(76, 175, 80, 0.12); 
+    }
+}
+
+ion-avatar.plant-img-wrapper {
+    margin-right: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.content-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 22px 0;
+    gap: 15px;
+    flex-wrap: wrap; 
+}
+
+.plant-info {
+    flex: 1 1 min-content; 
+    min-width: 200px; 
+    
+    h4 {
+        margin: 0 0 6px 0;
+        font-size: 1.15rem;
+        color: var(--text-primary, #333);
+        font-weight: 600;
+    }
+    
+    p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary, #666);
+    }
+}
+
+.badge-container {
+    flex-shrink: 0; 
+}

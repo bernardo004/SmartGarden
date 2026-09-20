@@ -1,0 +1,25 @@
+<ion-item class="plant-item card-hoverable" lines="none" button [routerLink]="['/plant', plant.id]">
+    
+    <ion-avatar slot="start" class="plant-img-wrapper">
+        <img [src]="plant.imageUrl" 
+             [alt]="plant.name" 
+             [style.objectPosition]="'center ' + plant.imgPosY + '%'"
+             [style.transform]="'scale(' + (1 + (plant.imgZoom / 100)) + ')'">
+    </ion-avatar>
+    
+    <div class="content-wrapper">
+        
+        <div class="plant-info">
+            <h4>{{ plant.name }}</h4>
+            <p>{{ plant.sensorsCount }} sensori attivi • Ultimo sync: {{ plant.lastSync }}</p>
+        </div>
+        
+        <div class="badge-container">
+            <span class="status-badge" [ngClass]="plant.statusClass">
+                {{ plant.statusIcon }} {{ plant.statusText }}
+            </span>
+        </div>
+
+    </div>
+
+</ion-item>

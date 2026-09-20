@@ -1,0 +1,36 @@
+# --- NODE & DIPENDENZE ---
+# Ignora tutte le cartelle node_modules (sia in frontend che backend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- ANGULAR SPECIFIC ---
+# Cartelle generate durante lo sviluppo e la build
+.angular/
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
+/coverage/
+
+# --- AMBIENTE E SICUREZZA ---
+# Ignora i file con le password
+.env
+.env.local
+
+# --- IDE & EDITORS ---
+# Pulizia per VS Code e altri editor comuni
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.history/
+*.sublime-workspace
+.idea/
+
+# --- SYSTEM FILES ---
+# Spazzatura creata da Mac e Windows
+.DS_Store
+Thumbs.db
+/SmartGarden/frontend/src/environments

@@ -1,0 +1,49 @@
+<ion-content [fullscreen]="true">
+    <app-page-banner 
+        title="Centro Notifiche" 
+        subtitle="Tieni sotto controllo i tuoi giardini e i sensori"
+        backLinkUrl="/dashboard" 
+        backLinkText="Torna alla Dashboard">
+    </app-page-banner>
+
+    <main class="notifications-section container container-md">
+        
+        <div class="notifications-toolbar animate-on-scroll fade-up">
+            <h2 class="toolbar-title">Recenti ({{ unreadCount }} non lette)</h2>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-text" (click)="markAllAsRead()">Segna lette</button>
+                <button class="btn btn-text" style="color: #e74c3c;" (click)="deleteAllNotifications()">Elimina tutte</button>
+            </div>
+        </div>
+
+        <div class="notifications-list">
+            @if (isLoading) {
+                @for (dummy of [1, 2, 3, 4]; track dummy) {
+                    <div class="card skeleton-card">
+                        <div class="skeleton-img shimmer"></div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-title shimmer"></div>
+                            <div class="skeleton-text shimmer"></div>
+                        </div>
+                    </div>
+                }
+            } 
+            @else {
+                @for (notif of notifications; track notif.id) {
+                    <app-notification-card 
+                        [data]="notif" 
+                        (deleteEvent)="handleDeleteSingle($event)" 
+                        class="animate-on-scroll slide-right" 
+                        [style.transition-delay]="($index * 0.1) + 's'">
+                    </app-notification-card>
+                }
+
+                @if (notifications.length === 0) {
+                    <div class="empty-state text-center mt-40">
+                        <p>Non hai nessuna notifica al momento.</p>
+                    </div>
+                }
+            }
+        </div>
+    </main>
+</ion-content>

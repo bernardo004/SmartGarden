@@ -1,0 +1,28 @@
+:root {
+  --primary-green:    #1d7c21;
+  --dark-green:       #1b5e20;
+  --light-green:      #e8f5e9;
+  
+  --page-bg:          #f4f7f6; 
+  --text-primary:     #2c3e50;
+  --text-secondary:   #546e7a;
+  --white:            #ffffff;
+  --light-gray:       #e4e7eb;
+
+  --radius-card:      12px;
+  --radius-btn:       8px;
+  
+  --shadow-soft:      0 8px 24px rgba(0,0,0,0.06); 
+  --shadow-hover:     0 12px 30px rgba(29, 124, 33, 0.15); 
+  
+  --ion-color-primary: var(--primary-green);
+  --ion-color-primary-rgb: 29,124,33;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #196d1d;
+  --ion-color-primary-tint: #348937;
+  
+  --ion-background-color: var(--page-bg);
+  --ion-text-color: var(--text-primary);
+  --ion-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

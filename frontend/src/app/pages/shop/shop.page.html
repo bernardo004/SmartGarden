@@ -1,0 +1,79 @@
+<app-navbar></app-navbar>
+
+<ion-content [fullscreen]="true">
+  @if (showAnimations) {
+      <main>
+          <section class="page-banner banner-shop-bg animate-on-scroll zoom-in">
+              <div class="container page-banner-content text-center">
+                  <h1 class="banner-title banner-text-dark">Hardware Store</h1>
+                  <p class="banner-subtitle banner-text-muted">Tutto il necessario per dare vita al tuo giardino intelligente.</p>
+              </div>
+          </section>
+
+          <div class="shop-container container">
+              <h2 class="section-title shop-section-title animate-on-scroll slide-left">Sensori Consigliati</h2>
+              
+              <div class="products-grid">
+                  @if (isLoading) {
+                      @for (dummy of [1, 2, 3]; track dummy) {
+                          <div class="card skeleton-card">
+                              <div class="skeleton-img shimmer"></div>
+                              <div class="skeleton-content">
+                                  <div class="skeleton-title shimmer"></div>
+                                  <div class="skeleton-text shimmer"></div>
+                              </div>
+                          </div>
+                      }
+                  } @else if (hasError) {
+                      <div class="error-message-card grid-full-width">
+                          <span class="error-icon">⚠️</span>
+                          <p>Impossibile connettersi al server. Verifica la tua connessione.</p>
+                      </div>
+                  } @else {
+                      @for (product of recommendedProducts; track product.id) {
+                          <app-product-card 
+                              [product]="product" 
+                              [isActive]="activeCardId === product.id"
+                              (toggleCardEvent)="handleToggle(product.id)"
+                              class="animate-on-scroll">
+                          </app-product-card>
+                      }
+                  }
+              </div>
+          </div>
+
+          <div class="shop-container container mt-60">
+              <h2 class="section-title shop-section-title animate-on-scroll slide-left">Altri sensori</h2>
+              
+              <div class="products-grid">
+                  @if (isLoading) {
+                      @for (dummy of [1, 2, 3]; track dummy) {
+                          <div class="card skeleton-card">
+                              <div class="skeleton-img shimmer"></div>
+                              <div class="skeleton-content">
+                                  <div class="skeleton-title shimmer"></div>
+                                  <div class="skeleton-text shimmer"></div>
+                              </div>
+                          </div>
+                      }
+                  } @else if (hasError) {
+                      <div class="error-message-card grid-full-width">
+                          <span class="error-icon">⚠️</span>
+                          <p>Impossibile connettersi al server. Verifica la tua connessione.</p>
+                      </div>
+                  } @else {
+                      @for (product of allProducts; track product.id) {
+                          <app-product-card 
+                              [product]="product" 
+                              [isActive]="activeCardId === product.id"
+                              (toggleCardEvent)="handleToggle(product.id)"
+                              class="animate-on-scroll">
+                          </app-product-card>
+                      }
+                  }
+              </div>
+          </div>
+      </main>
+  <app-footer></app-footer>
+  }
+</ion-content>

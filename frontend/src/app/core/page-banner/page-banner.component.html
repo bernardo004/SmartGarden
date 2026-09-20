@@ -1,0 +1,67 @@
+<div class="page-banner banner-custom-bg"
+     [style.backgroundImage]="bgImageUrl ? 'url(\'' + bgImageUrl + '\')' : 'none'"
+     [style.backgroundPosition]="'center ' + bgPosY + '%'"
+     [style.backgroundSize]="bgZoom ? (100 + (+bgZoom)) + '%' : 'cover'">
+
+    @if (showEditBtn) {
+        <button class="btn btn-glass banner-edit-pos" (click)="onEdit.emit()">
+            Cambia Sfondo
+        </button>
+    }
+
+    <div class="container animate-on-scroll fade-up banner-content-wrapper">
+        <div class="banner-glass-box">
+
+            @if (backLinkUrl) {
+                <a [routerLink]="backLinkUrl" class="back-link">
+                    <span class="arrow-icon">&larr;</span> {{ backLinkText }}
+                </a>
+            }
+
+            <div class="title-badge-group">
+                <div class="title-with-edit">
+                    <h1 class="banner-title">{{ title }}</h1>
+                    @if (showEditTitleBtn) {
+                        <button class="btn-icon-edit" (click)="onEditTitle.emit()" title="Modifica Nome">
+                            <svg class="edit-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5l6.74-6.76z" stroke-width="2.2"></path>
+                                <line x1="16" y1="8" x2="2" y2="22" stroke-width="2.2"></line>
+                                <line x1="17.5" y1="15" x2="9" y2="6.5" stroke-width="2.2"></line>
+                            </svg>
+                        </button>
+                    }
+                </div>
+
+                @if (statusText) {
+                    <span class="status-badge" [ngClass]="statusClass">
+                        {{ statusIcon }} {{ statusText }}
+                    </span>
+                }
+            </div>
+
+            @if (subtitle || showEditDescBtn) {
+                <div class="subtitle-with-edit" style="display: flex; align-items: center; gap: 8px;">
+                    @if (subtitle) {
+                        <p class="banner-subtitle" style="margin: 0;">{{ subtitle }}</p>
+                    }
+                    @if (showEditDescBtn) {
+                        <button class="btn-icon-edit" (click)="onEditDesc.emit()" title="Modifica Descrizione">
+                            <svg class="edit-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5l6.74-6.76z" stroke-width="2"></path>
+                                <line x1="16" y1="8" x2="2" y2="22" stroke-width="2"></line>
+                                <line x1="17.5" y1="15" x2="9" y2="6.5" stroke-width="2"></line>
+                            </svg>
+                        </button>
+                    }
+                </div>
+            }
+
+            @if (showAddDateBtn) {
+                <button class="btn btn-glass" style="margin-top: 12px; padding: 6px 14px; font-size: 0.85rem; border-radius: 20px;" (click)="onAddDate.emit()">
+                    Aggiungi data semina
+                </button>
+            }
+
+        </div>
+    </div>
+</div>

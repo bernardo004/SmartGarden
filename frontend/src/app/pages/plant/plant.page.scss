@@ -1,0 +1,113 @@
+.pianta-section {
+
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.pianta-grid {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .pianta-section {
+
+        padding-top: 30px;
+        padding-bottom: 40px;
+    }
+
+    .pianta-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+
+@media print {
+
+    @page {
+        margin: 15mm;
+        size: A4 portrait;
+    }
+
+    ::ng-deep body {
+        background-color: white !important;
+        font-family: 'Inter', 'Roboto', sans-serif !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    ::ng-deep body * { visibility: hidden; }
+
+    ::ng-deep .charts-export-zone,
+    ::ng-deep .charts-export-zone * {
+        visibility: visible;
+    }
+
+    ::ng-deep .charts-export-zone {
+        position: absolute;
+        left: 0; top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: white;
+        box-shadow: none;
+        border: none;
+    }
+
+    ::ng-deep .charts-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 15px !important;
+    }
+
+    ::ng-deep .btn,
+    ::ng-deep .btn-outline,
+    ::ng-deep .btn-primary,
+    ::ng-deep .btn-info,
+    ::ng-deep .btn-glass,
+    ::ng-deep .back-link,
+    ::ng-deep app-page-banner,
+    ::ng-deep app-profile {
+        display: none !important;
+    }
+
+
+    ::ng-deep .print-header {
+        display: block !important;
+        visibility: visible !important;
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--primary-green, #2e7d32);
+
+        h1 {
+            font-size: 24pt;
+            color: var(--dark-green, #1b5e20);
+            margin: 0 0 5px 0;
+        }
+
+        p {
+            font-size: 11pt;
+            color: #7f8c8d;
+            margin: 0;
+        }
+    }
+}
+
+
+.datetime-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+ion-datetime {
+    --background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}

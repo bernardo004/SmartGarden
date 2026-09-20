@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+
+<ion-content [fullscreen]="true">
+    @if (showAnimations) {
+        <main class="help-header container container-sm">
+            <div class="card form-container animate-on-scroll fade-up">
+                
+                @if (!isSuccess) {
+                    <div class="form-header">
+                        <h2>Hai bisogno di assistenza?</h2>
+                        <p>Compila il modulo sottostante descrivendo il problema con il tuo SmartGarden. Il nostro team ti risponderà il prima possibile.</p>
+                    </div>
+
+                    @if (serverError) {
+                        <div class="status-note danger mb-25">
+                            {{ serverError }}
+                        </div>
+                    }
+
+                    <form class="contact-form" (submit)="onSubmit($event)">
+                        <div class="input-group">
+                            <label for="username">Nome Utente</label>
+                            <input type="text" id="username" name="username" class="input" [class.input-error]="isInvalid('username')" placeholder="Inserisci il tuo nome" [(ngModel)]="username">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Indirizzo Email</label>
+                            <input type="email" id="email" name="email" class="input" [class.input-error]="isInvalid('email')" placeholder="es. mario.rossi@email.com" [(ngModel)]="email">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="titolo">Titolo del Problema</label>
+                            <input type="text" id="titolo" name="titolo" class="input" [class.input-error]="isInvalid('titolo')" placeholder="Riassumi il problema (es. Password dimenticata)" [(ngModel)]="titolo">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="descrizione">Descrizione del Problema</label>
+                            <textarea id="descrizione" name="descrizione" class="input" [class.input-error]="isInvalid('descrizione')" rows="6" placeholder="Descrivi dettagliatamente cosa non funziona..." [(ngModel)]="descrizione"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full mt-15" [disabled]="isSubmitting">
+                            {{ isSubmitting ? 'Invio in corso...' : 'Invia Richiesta' }}
+                        </button>
+                    </form>
+                } 
+                @else {
+                    <div class="success-state">
+                        <h2 class="success-title">Richiesta inviata!</h2>
+                        <p class="success-text">
+                            Abbiamo ricevuto il tuo messaggio inviato da<br>
+                            <strong>{{ email }}</strong>.<br>
+                            Il nostro team di supporto ti risponderà a breve.
+                        </p>
+                        
+                        <a [routerLink]="returnPath" class="btn-return">{{ returnText }}</a>
+                    </div>
+                }
+
+            </div>
+        </main>
+    }
+</ion-content>

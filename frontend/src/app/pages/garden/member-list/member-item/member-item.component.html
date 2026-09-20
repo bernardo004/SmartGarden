@@ -1,0 +1,50 @@
+<div class="member-item">
+    <div class="member-profile hover-effect" (click)="onClick.emit()" role="button" tabindex="0">
+        <div class="avatar-wrapper">
+            @if (member.imageUrl) {
+                <img [src]="member.imageUrl" class="avatar avatar-sm object-cover" alt="Avatar">
+            } @else {
+                <div class="avatar avatar-sm" [ngClass]="member.avatarColor">{{ member.initials }}</div>
+            }
+            <div class="status-dot" [ngClass]="member.isOnline ? 'dot-online' : 'dot-offline'"></div>
+        </div>
+        <div>
+            <div class="member-name">{{ member.name }}</div>
+            <div class="member-role">{{ member.role }}</div>
+        </div>
+    </div>
+    
+    @if (canManage) {
+        <div class="group-menu-container">
+            <button class="btn-three-dots" (click)="toggleMenu($event)">⋮</button>
+
+            @if (isMenuOpen) {
+                <div class="custom-dropdown-menu">
+                    @if (isMe) {
+                        @if (currentUserRole !== 'Creatore') {
+                            <button class="dropdown-action-item text-danger" (click)="action('leave', $event)">Abbandona Gruppo</button>
+                        } @else {
+                            <button class="dropdown-action-item text-danger" (click)="action('delete', $event)">Elimina Giardino</button>
+                        }
+                    }
+
+                    @if (!isMe) {
+                        @if (currentUserRole === 'Creatore' && member.role === 'Admin') {
+                            <button class="dropdown-action-item text-orange" (click)="action('transfer', $event)">Rendi Creatore</button>
+                            <hr class="menu-divider">
+                        }
+
+                        @if (member.role === 'Membro') {
+                            <button class="dropdown-action-item text-orange" (click)="action('promote', $event)">Promuovi Admin</button>
+                        } @else if (member.role === 'Admin') {
+                            <button class="dropdown-action-item text-orange" (click)="action('demote', $event)">Revoca Admin</button>
+                        }
+
+                        <hr class="menu-divider">
+                        <button class="dropdown-action-item text-danger" (click)="action('kick', $event)">Rimuovi dal Gruppo</button>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

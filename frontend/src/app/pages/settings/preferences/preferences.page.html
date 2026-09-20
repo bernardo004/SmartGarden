@@ -1,0 +1,33 @@
+<h2 class="section-title">Preferenze Sistema</h2>
+<hr class="divider">
+
+<form class="settings-form" (ngSubmit)="savePreferences()">
+    <div class="input-group">
+        <label>Unità di Temperatura</label>
+        <select class="input" [(ngModel)]="prefs.tempUnit" name="tempUnit">
+            <option value="C">Celsius (°C)</option>
+            <option value="F">Fahrenheit (°F)</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label>Lingua Interfaccia</label>
+        <select class="input" [(ngModel)]="prefs.language" name="language">
+            <option value="it">Italiano</option>
+            <option value="en" disabled>English (Coming Soon)</option>
+        </select>
+    </div>
+
+    <hr class="divider">
+    <h3 class="section-subtitle">Notifiche</h3>
+
+    <div class="checkbox-group mt-15">
+        <label class="checkbox-label">
+            <input type="checkbox" class="input-checkbox" [(ngModel)]="prefs.emailNotifs" name="emailNotifs"> 
+            Ricevi avvisi via Email
+        </label>
+    </div>
+
+    <div class="form-actions mt-15">
+        <button type="submit" class="btn btn-primary">Salva Preferenze</button>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+<p class="auth-subtitle">Bentornato! Accedi alla tua serra virtuale.</p>
+
+@if (serverError) {
+    <div class="status-note danger mb-25">
+        {{ serverError }}
+    </div>
+}
+
+<form (submit)="onLogin($event)">
+    <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="input" [class.input-error]="isInvalid('email')" placeholder="nome@esempio.com" [(ngModel)]="email" name="email">
+    </div>
+
+    <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="input" [class.input-error]="isInvalid('password')" placeholder="La tua password" [(ngModel)]="password" name="password">
+    </div>
+
+    <div class="form-actions-row">
+        <label class="checkbox-wrapper">
+            <input type="checkbox" class="input-checkbox" [(ngModel)]="rememberMe" name="remember">
+            <span class="checkbox-text">Ricordami</span>
+        </label>
+        <a routerLink="/auth/forgot-password" class="forgot-link">Password dimenticata?</a>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full mt-15" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Accesso in corso...' : 'Accedi' }}
+    </button>
+</form>
+
+<div class="auth-footer">
+    <p>Non hai un account? <a routerLink="/auth/register">Registrati ora</a></p>
+</div>

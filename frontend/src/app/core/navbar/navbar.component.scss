@@ -1,0 +1,231 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  min-height: 76px;
+  box-sizing: border-box;
+
+  .logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--dark-green);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
+    margin-right: 30px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+
+    a:not(.btn-login) {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 1.05rem;
+      position: relative;
+      padding: 5px 0;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-green);
+        transition: width 0.3s ease-in-out;
+        border-radius: 2px;
+      }
+
+      &:hover, &.active {
+        color: var(--dark-green);
+        &::after { width: 100%; }
+      }
+    }
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-shrink: 0;
+  }
+
+  .nav-cart-btn {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding-top: 5px;
+
+    svg { fill: currentColor; }
+
+    &:hover {
+      transform: translateY(-2px);
+      color: var(--primary-green);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -8px;
+      background-color: #f25c54;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 1;
+    }
+
+    &.cart-empty-hidden { display: none !important; }
+  }
+
+  .btn-login {
+      background-color: #eaf5eb;
+      color: var(--dark-green) !important; 
+      border-radius: 25px;
+      padding: 10px 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none !important;
+      font-weight: bold;
+      transition: all 0.3s ease;
+
+      &::after { display: none !important; } 
+
+      &:hover {
+        background-color: var(--primary-green) !important;
+        color: var(--white) !important; 
+        box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2);
+        transform: translateY(-2px);
+      }
+  }
+
+  .menu-icon, .mobile-login-btn { display: none; }
+}
+
+.mobile-only-links { display: none; }
+
+@media (max-width: 992px) {
+  .navbar {
+    padding: 15px 20px;
+
+    @media (max-width: 480px) {
+        .logo-text { display: none; }
+    }
+
+    .nav-container {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--white);
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+      max-height: 0;
+      padding: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &.open {
+        max-height: 500px;
+        padding: 35px 0;
+        opacity: 1;
+        visibility: visible;
+        border-bottom: 1px solid #eee;
+      }
+    }
+
+    .nav-links {
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      width: 100%;
+
+      a:not(.btn-login) {
+         font-size: 1.15rem;
+      }
+    }
+
+    .desktop-login-btn { display: none; }
+
+    .mobile-login-btn {
+        display: inline-flex;
+        padding: 12px 40px;
+        margin-top: 15px;
+    }
+
+    .menu-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--dark-green);
+      font-weight: bold;
+      line-height: 1;
+      user-select: none;
+    }
+  }
+}
+
+.logo {
+
+    .animated-logo {
+        fill: transparent;                     
+        stroke: var(--dark-green, #2ecc71);    
+        stroke-width: 2.5;                     
+        stroke-linecap: round;                 
+        stroke-linejoin: round;
+
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+
+        animation: drawPlant 2s ease-in-out forwards;
+
+		position: relative;
+        top: -6px;
+    }
+}
+
+@keyframes drawPlant {
+    0% {
+        stroke-dashoffset: 100; 
+    }
+    100% {
+        stroke-dashoffset: 0; 
+    }
+}

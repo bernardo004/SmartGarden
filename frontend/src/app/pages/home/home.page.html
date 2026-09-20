@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+
+<ion-content [fullscreen]="true">
+  @if (showAnimations) {
+    <main class="symmetrical-layout">
+        
+        <section class="hero-fullscreen animate-on-scroll zoom-in">
+            <div class="hero-content">
+                <span class="hero-badge">Il pollice verde 2.0</span>
+                
+                <h1>Connetti la natura<br>alla tecnologia.</h1>
+                <p>SmartGarden è il tuo assistente digitale. Monitora, organizza e prenditi cura del tuo angolo verde analizzando i dati essenziali in tempo reale.</p>
+                
+                <div class="hero-buttons">
+                    <a routerLink="/auth/register" class="btn btn-primary btn-lg">Inizia Ora</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-container">
+            <div class="features-grid">
+                
+                <article class="feature-card animate-on-scroll slide-left">
+                    <div class="card-media">
+                        <img src="/assets/img/home/diario_botanico.png" alt="Diario digitale">
+                    </div>
+                    <div class="card-text">
+                        <h2>Diario Botanico</h2>
+                        <p>Un profilo dedicato per ogni pianta. Carica foto, annota i progressi e tieni un tracciamento puntuale dello storico degli innaffiamenti sul tuo pannello.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card animate-on-scroll slide-right">
+                    <div class="card-media">
+                        <img src="/assets/img/home/foto_pianta_sensori.jpeg" alt="Sensore nel terreno">
+                    </div>
+                    <div class="card-text">
+                        <h2>Analisi Sensoriale</h2>
+                        <p>Controlla in tempo reale umidità, livello dell'acqua e luce solare. L'app elabora automaticamente le medie giornaliere e settimanali per te.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card animate-on-scroll slide-left">
+                    <div class="card-media">
+                        <img src="/assets/img/home/foto_giardino.jpeg" alt="Famiglia e app">
+                    </div>
+                    <div class="card-text">
+                        <h2>Cura Condivisa</h2>
+                        <p>Crea un giardino virtuale di gruppo gestito in sicurezza dall'amministratore. Collabora con coinquilini o parenti per mantenere in salute il verde.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card animate-on-scroll slide-right">
+                    <div class="card-media">
+                        <img src="/assets/img/home/foto_notifiche.png" alt="Notifiche Personalizzate">
+                    </div>
+                    <div class="card-text">
+                        <h2>Notifiche Mirate</h2>
+                        <p>Nessun alert fuori luogo. Imposta promemoria personalizzati che ti avvisano esattamente nel momento in cui una specifica pianta ha bisogno di intervento.</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="shop-showcase-container animate-on-scroll">
+            <div class="shop-super-card">
+                <div class="shop-text">
+                    <h2>L'ecosistema Hardware</h2>
+                    <p>Scegli la massima comodità con i nostri sensori pronti all'uso, oppure costruisci la tua stazione personalizzata integrando dispositivi di terze parti seguendo le nostre guide.</p>
+                </div>
+                <div class="shop-action">
+                    <a routerLink="/shop" class="btn btn-shop">Visita lo Shop →</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+  <app-footer></app-footer>
+}
+</ion-content>

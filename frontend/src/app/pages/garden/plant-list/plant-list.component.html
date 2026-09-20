@@ -1,0 +1,36 @@
+<section class="panel card">
+    <div class="panel-header">
+        <h2 class="panel-title">Le nostre Piante {{ isLoading ? '' : '(' + plants.length + ')' }}</h2>
+        
+        @if (currentUserRole === 'Creatore' || currentUserRole === 'Admin') {
+            <button class="btn btn-primary" (click)="onAddPlant.emit()">+ Aggiungi Pianta</button>
+        }
+    </div>
+
+    <div class="plant-list">
+        @if (isLoading) {
+            @for (dummy of [1, 2, 3]; track dummy) {
+                <div class="plant-item">
+                    <div class="plant-img-wrapper shimmer"></div>
+                    <div class="plant-info skeleton-info">
+                        <div class="shimmer skeleton-title"></div>
+                        <div class="shimmer skeleton-subtitle"></div>
+                    </div>
+                    <div class="plant-actions">
+                        <div class="shimmer skeleton-badge"></div>
+                    </div>
+                </div>
+            }
+        } @else {
+            @for (plant of plants; track plant.id) {
+                <app-plant-item [plant]="plant"></app-plant-item>
+            }
+            
+            @if (plants.length === 0) {
+                <div class="empty-state">
+                    <p>Non ci sono ancora piante in questo giardino.</p>
+                </div>
+            }
+        }
+    </div>
+</section>

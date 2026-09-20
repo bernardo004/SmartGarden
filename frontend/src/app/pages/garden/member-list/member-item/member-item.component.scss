@@ -1,0 +1,107 @@
+.member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.member-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hover-effect {
+    cursor: pointer;
+    padding: 5px 8px;
+    margin-left: -8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+}
+
+.object-cover { object-fit: cover; }
+.bg-orange { background-color: #e67e22; }
+.bg-blue { background-color: #3498db; }
+.bg-green { background-color: #2ecc71; }
+.bg-purple { background-color: #9b59b6; }
+.bg-gray { background-color: #95a5a6; }
+
+.member-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.member-role {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.group-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-three-dots {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-secondary, #555);
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 36px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+
+.custom-dropdown-menu {
+    position: absolute;
+    top: calc(100% - 5px);
+    right: 35px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    min-width: 220px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    border: 1px solid #f0f0f0;
+
+    .dropdown-action-item {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        font-weight: 600;
+        background: transparent;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        width: 100%;
+
+        &:hover { background-color: #f8f9fa; }
+        
+        &.text-orange { color: #e67e22; }
+        &.text-danger { color: #d32f2f; }
+    }
+
+    .menu-divider {
+        border: 0;
+        border-top: 1px solid #eee;
+        margin: 5px 0;
+    }
+}

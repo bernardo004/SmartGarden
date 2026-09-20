@@ -1,0 +1,69 @@
+<h2 class="section-title">Dati Personali</h2>
+<hr class="divider">
+
+<form class="settings-form" (submit)="saveProfile(); $event.preventDefault()">
+    
+    <div class="input-group avatar-group">
+        <div class="avatar avatar-lg"> @if (profileData.avatar.url) {
+                <img [src]="profileData.avatar.url" 
+                     class="avatar-img"
+                     [style.object-position]="'center ' + profileData.avatar.posY + '%'"
+                     [style.transform]="'scale(' + (1 + profileData.avatar.zoom/100) + ')'">
+            } @else {
+                <span>{{ userInitials }}</span>
+            }
+        </div>
+        <div class="avatar-actions">
+            <button type="button" class="btn btn-secondary btn-small" (click)="openPhotoModal()">Cambia Foto</button>
+            <button type="button" class="btn btn-light btn-small" (click)="removePhoto()">Rimuovi</button>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label for="nomeCompleto">Nome Utente</label>
+        <input type="text" class="input" [(ngModel)]="profileData.username" name="username" required>
+    </div>
+
+    <div class="input-group">
+        <label for="gender">Genere</label>
+        <select class="input" [(ngModel)]="profileData.gender" name="gender">
+            <option value="Non specificato">Non specificato</option>
+            <option value="Uomo">Uomo</option>
+            <option value="Donna">Donna</option>
+            <option value="Altro">Altro</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label for="bio">Biografia</label>
+        <textarea id="bio" class="input" rows="4" [(ngModel)]="profileData.bio" name="bio" placeholder="Racconta la tua passione per il verde..."></textarea>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+    </div>
+</form>
+
+<app-modal [isVisible]="isPhotoModalOpen" (closeEvent)="isPhotoModalOpen = false">
+    <h3 class="mb-15">Aggiorna Foto Profilo</h3>
+    
+    <div class="input-group mb-25 text-center">
+        <input type="file" id="avatarFileInput" style="display: none;" (change)="onFileSelected($event)" accept="image/*">
+        
+        <button type="button" class="btn btn-secondary btn-full" (click)="triggerFileInput()">
+            Carica Foto dal Dispositivo
+        </button>
+    </div>
+
+    @if (tempAvatarUrl) {
+        <app-image-editor 
+            [imageUrl]="tempAvatarUrl" 
+            format="circle" 
+            [showControls]="true"
+            [(zoomLevel)]="profileData.avatar.zoom"
+            [(objPosY)]="profileData.avatar.posY">
+        </app-image-editor>
+    }
+
+    <button class="btn btn-primary btn-full mt-15" (click)="savePhoto()">Applica Foto</button>
+</app-modal>

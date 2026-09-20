@@ -1,0 +1,65 @@
+<div class="card panel">
+    <h2 class="summary-title">Riepilogo Ordine</h2>
+    
+    <button class="btn-checkout" (click)="processPayment()" [disabled]="cartItems.length === 0">Acquista Ora</button>
+    
+    <p class="terms-disclaimer">
+        Scegliendo "Acquista Ora" accetti le condizioni di vendita di SmartGarden.
+    </p>
+
+    <div class="cart-items-container">
+        @if (cartItems.length === 0) {
+            <p style="color: gray; text-align: center; margin: 20px 0;">Il tuo carrello è vuoto.</p>
+        } @else {
+            @for (item of cartItems; track item.name) {
+                <div class="summary-item">
+                    <div>
+                        <div class="item-name-row">{{ item.name }} <span class="item-qty">(x{{ item.quantity }})</span></div>
+                        <div class="item-actions">
+                            @if (item.quantity > 1) {
+                                <button (click)="removeOne(item.name)" class="btn-remove-link">Rimuovi 1</button>
+                                <span class="remove-separator">|</span>
+                                <button (click)="removeAll(item.name)" class="btn-remove-link danger">Rimuovi tutti</button>
+                            } @else {
+                                <button (click)="removeAll(item.name)" class="btn-remove-link">Rimuovi</button>
+                            }
+                        </div>
+                    </div>
+                    <span class="item-price">€{{ (item.price * item.quantity) | number:'1.2-2' }}</span>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="summary-total">
+        <span>Totale:</span>
+        <span>€ {{ totalAmount | number:'1.2-2' }}</span>
+    </div>
+</div>
+
+<app-modal [isVisible]="isSuccessModalVisible" (closeEvent)="onSuccessModalClose()">
+    <div class="modal-success-content">
+        <div class="success-icon">✓</div>
+        <h2 class="section-title">Ordine Confermato!</h2>
+        <p class="section-subtitle mt-15">
+            Il tuo ordine è stato processato con successo. Riceverai un'email di riepilogo a breve.
+        </p>
+        <button class="btn btn-primary btn-full mt-15" (click)="onSuccessModalClose()">
+            Continua
+        </button>
+    </div>
+</app-modal>
+
+<app-modal [isVisible]="isLoginModalVisible" (closeEvent)="onLoginModalClose()">
+    <div class="modal-login-content">
+        <div class="warning-icon">!</div>
+        <h2 class="section-title">Accesso Richiesto</h2>
+        <p class="section-subtitle mt-15">
+            Per completare l'acquisto e poter tracciare la tua spedizione, è necessario accedere al tuo account.
+        </p>
+        <div class="modal-actions mt-15">
+            <button class="btn btn-outline" (click)="onLoginModalClose()">Annulla</button>
+            <button class="btn btn-primary" (click)="goToLogin()">Vai al Login</button>
+        </div>
+    </div>
+</app-modal>

@@ -1,0 +1,26 @@
+<article class="card garden-card card-hoverable">
+    <a [routerLink]="['/garden', data.id]" class="card-link" [attr.aria-label]="'Entra nel giardino: ' + data.name"></a>
+
+    <div class="garden-cover"
+         [style.backgroundImage]="'url(' + data.imageUrl + ')'"
+         [style.backgroundPosition]="'center ' + data.bgPosY + '%'"
+         [style.backgroundSize]="data.bgZoom ? (100 + data.bgZoom) + '%' : 'cover'">
+    </div>
+
+    <div class="garden-content">
+        <div class="garden-header">
+            <h3>{{ data.name }}</h3>
+            <span class="badge-role" [ngClass]="data.role === 'Creatore' || data.role === 'Admin' ? 'role-admin' : 'role-member'">
+                {{ data.role | uppercase }}
+            </span>
+        </div>
+
+        <p class="garden-desc">{{ data.description }}</p>
+
+        <div class="garden-meta">
+            <span>{{ data.memberCount }} Membri</span>
+            <span class="meta-divider">|</span>
+            <span>{{ data.plantCount }} Piante</span>
+        </div>
+    </div>
+</article>
